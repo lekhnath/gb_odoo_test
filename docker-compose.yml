@@ -1,0 +1,41 @@
+version: '3'
+services:
+  web:
+    image: odoo:10
+    container_name: gb_web
+    depends_on:
+      - db
+    ports:
+      - 8069:8069
+    volumes:
+      - $PWD/odoo.conf:/etc/odoo/odoo.conf
+      - $PWD/gb/addons:/mnt/extra-addons
+    networks:
+      - gb_network
+    environment:
+      - HOST=db
+      - USER=odoo
+      - PASSWORD=odoo
+    user: odoo
+    command: ["odoo", "--dev", "all", "-u", "convert_date"]
+  db:
+    image: postgres:9.6.3-alpine
+    container_name: gb_db
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data/pgdata
+    networks:
+      - gb_network
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    healthcheck:
+      test: ["pg_isready", "-h", "localhost", "-p", "5432", "-U", "odoo"]
+      interval: 3s
+      timeout: 5s
+      retries: 5
+volumes:
+  odoo-db-data:
+networks:
+  gb_network:
+    driver: bridge
