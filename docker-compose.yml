@@ -8,6 +8,7 @@ services:
     ports:
       - 8069:8069
     volumes:
+      - odoo-web-data:/var/lib/odoo
       - $PWD/odoo.conf:/etc/odoo/odoo.conf
       - $PWD/gb/addons:/mnt/extra-addons
     networks:
@@ -17,7 +18,7 @@ services:
       - USER=odoo
       - PASSWORD=odoo
     user: odoo
-    command: ["odoo", "--dev", "all", "-u", "convert_date"]
+    command: ["odoo", "--dev", "all", "-u", "gb_ui"]
   db:
     image: postgres:9.6.3-alpine
     container_name: gb_db
@@ -35,6 +36,7 @@ services:
       timeout: 5s
       retries: 5
 volumes:
+  odoo-web-data:
   odoo-db-data:
 networks:
   gb_network:

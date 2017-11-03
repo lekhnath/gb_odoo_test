@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <data>
+    <function id="update_company_logo" model="res.company" name="update_main_logo" />
+  </data>
+</odoo>

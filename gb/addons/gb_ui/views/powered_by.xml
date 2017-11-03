@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+  <record id="menu_secondary" model="ir.ui.view">
+    <field name="name">Powered By Great Bears Technology</field>
+    <field name="inherit_id" ref="web.menu_secondary"></field>
+    <field name="arch" type="xml">
+      <xpath expr="//div[@class='o_sub_menu_footer']" position="replace">
+          <div class="o_sub_menu_footer">
+              Powered by <a href="http://greatbear.tech/" target="_blank" title="Great Bear Technologies"><span>GBT</span></a>
+          </div>
+      </xpath>
+    </field>
+  </record>
+
+</odoo>
